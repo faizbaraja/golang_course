@@ -31,7 +31,6 @@ func (eh ExerciseHandler) GetExerciseByID(c *gin.Context) {
 
 	var exercise domain.Exercise
 	err = eh.db.Where("id = ?", id).Preload("Questions").Take(&exercise).Error
-	// err = eh.db.Select("title", "description").Where("id = ?", id).Take(&exercise).Error
 	if err != nil {
 		c.JSON(http.StatusNotFound, map[string]string{
 			"message": "exercise not found",
