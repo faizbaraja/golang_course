@@ -31,6 +31,7 @@ func (eh ExerciseHandler) GetExerciseByID(c *gin.Context) {
 
 	var exercise domain.Exercise
 	err = eh.db.Where("id = ?", id).Preload("Questions").Take(&exercise).Error
+	// err = eh.db.Select("title", "description").Where("id = ?", id).Take(&exercise).Error
 	if err != nil {
 		c.JSON(http.StatusNotFound, map[string]string{
 			"message": "exercise not found",
@@ -91,6 +92,28 @@ func (eh ExerciseHandler) GetScore(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]int{
 		"score": score.total,
 	})
+}
+
+func (uh ExerciseHandler) NewExercise(c *gin.Context) {
+	var newExercise domain.NewExercise
+	if err := c.ShouldBind(&newExercise); err != nil {
+		c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "invalid body",
+		})
+	}
+
+	// setelah line ini adalah usecase
+	exercise, err := domain.CreateNewExercise(newExercise.Title, newExercise.Description)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, map[string]string{
+			"message": err.Error(),
+		})
+	}
+	if err := uh.db.Create(exercise).Error; err != nil {
+		c.JSON(http.StatusBadRequest, map[string]string{
+			"message": err.Error(),
+		})
+	}
 }
 
 type Score struct {
