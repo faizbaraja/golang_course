@@ -113,6 +113,9 @@ func (uh ExerciseHandler) NewExercise(c *gin.Context) {
 			"message": err.Error(),
 		})
 	}
+	c.JSON(http.StatusOK, map[string]string{
+		"message": "sukses",
+	})
 }
 
 type Score struct {

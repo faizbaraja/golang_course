@@ -68,4 +68,7 @@ func (uh AnswerHandler) NewAnswer(c *gin.Context) {
 			"message": err.Error(),
 		})
 	}
+	c.JSON(http.StatusOK, map[string]string{
+		"message": "sukses",
+	})
 }
