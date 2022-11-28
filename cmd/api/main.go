@@ -25,7 +25,7 @@ func main() {
 
 	// gp := os.Getenv("GOPATH")
 	// fmt.Println("path adalah " + gp)
-	envErr := godotenv.Load(".env")
+	envErr := godotenv.Load()
 	if envErr != nil {
 		fmt.Printf("error load env file")
 		os.Exit(1)
