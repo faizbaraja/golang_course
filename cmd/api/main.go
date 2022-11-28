@@ -20,6 +20,12 @@ func main() {
 		})
 	})
 
+	// envErr := godotenv.Load("../../.env")
+	// if envErr != nil {
+	// 	fmt.Printf("error load enf file")
+	// 	os.Exit(1)
+	// }
+
 	db := database.NewConnDatabase()
 	exerciseHandler := handler.NewExerciseHandler(db)
 	userHandler := userHandler.NewUserHandler(db)
@@ -36,5 +42,8 @@ func main() {
 
 	r.POST("/register", userHandler.Register)
 	r.POST("/login", userHandler.Login)
-	r.Run(":1234")
+
+	// port := os.Getenv("PORT")
+	appPort := "0.0.0.0:8080" // + port
+	r.Run(appPort)
 }
