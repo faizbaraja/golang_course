@@ -11,7 +11,7 @@ RUN go mod tidy
 
 RUN go build -o /app/batch6 cmd/api/main.go
 
-EXPOSE ${PORT}
+EXPOSE 8080
 
 ENTRYPOINT [ "/app/batch6" ]
 # CMD ["go", "run", "/app/main.go"] 
