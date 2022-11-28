@@ -44,6 +44,6 @@ func main() {
 	r.POST("/login", userHandler.Login)
 
 	// port := os.Getenv("PORT")
-	appPort := "0.0.0.0:8080" // + port
+	appPort := "https://golangcourse-production.up.railway.app:8080" // + port
 	r.Run(appPort)
 }
