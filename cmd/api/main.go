@@ -49,8 +49,8 @@ func main() {
 	r.POST("/login", userHandler.Login)
 
 	port := os.Getenv("PORT")
-	domain := os.Getenv("DOMAIN")
-	appPort := domain + ":" + port
+	// domain := os.Getenv("DOMAIN")
+	appPort := "0.0.0.0:" + port
 	// appPort := ":" + port
 	fmt.Println("masuk " + appPort)
 	r.Run(appPort)
