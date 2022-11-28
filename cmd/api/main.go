@@ -7,9 +7,12 @@ import (
 	questionHandler "exercise/internal/app/question/handler"
 	userHandler "exercise/internal/app/user/handler"
 	"exercise/internal/pkg/middleware"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -20,11 +23,13 @@ func main() {
 		})
 	})
 
-	// envErr := godotenv.Load("../../.env")
-	// if envErr != nil {
-	// 	fmt.Printf("error load enf file")
-	// 	os.Exit(1)
-	// }
+	// gp := os.Getenv("GOPATH")
+	// fmt.Println("path adalah " + gp)
+	envErr := godotenv.Load(".env")
+	if envErr != nil {
+		fmt.Printf("error load env file")
+		os.Exit(1)
+	}
 
 	db := database.NewConnDatabase()
 	exerciseHandler := handler.NewExerciseHandler(db)
@@ -43,7 +48,10 @@ func main() {
 	r.POST("/register", userHandler.Register)
 	r.POST("/login", userHandler.Login)
 
-	// port := os.Getenv("PORT")
-	appPort := "https://golangcourse-production.up.railway.app:8080" // + port
+	port := os.Getenv("PORT")
+	domain := os.Getenv("DOMAIN")
+	appPort := domain + ":" + port
+	// appPort := ":" + port
+	fmt.Println("masuk " + appPort)
 	r.Run(appPort)
 }
